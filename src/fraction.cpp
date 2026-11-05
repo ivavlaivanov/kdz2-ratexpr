@@ -1,4 +1,4 @@
-#include "fraction.hpp"
+#include "ratexpr/fraction.hpp"
 #include <cstdint>
 #include <numeric>
 
@@ -6,9 +6,9 @@ namespace ratexpr {
 Fraction::Fraction() : num(0), den(1) {};
 Fraction::Fraction(const Fraction &o) : num(o.num), den(o.den) {
 }
-Fraction::Fraction(Fraction::unchecked &&, std::int64_t numerator, std::int64_t denominator = 1)
+Fraction::Fraction(Fraction::unchecked &&, std::int64_t numerator, std::int64_t denominator)
     : num(numerator), den(denominator) {};
-Fraction::Fraction(std::int64_t numerator, std::int64_t denominator = 1) {
+Fraction::Fraction(std::int64_t numerator, std::int64_t denominator) {
     if (!(denominator != 0)) {
         throw std::invalid_argument("denomiantor must be not equal zero");
     }
@@ -27,14 +27,16 @@ Fraction Fraction::operator-() const {
 }
 Fraction &Fraction::operator+=(const Fraction &o) {
     std::int64_t _den = std::lcm(o.den, den);
-    num = num * _den / o.den + _den / den * o.num;
+    num = num * (_den / den) + (_den / o.den) * o.num;
     den = _den;
+    normalize();
     return *this;
 }
 Fraction &Fraction::operator*=(const Fraction &o) {
-    num *= o.num;
-    den *= o.den;
-    normalize();
+    std::int64_t l = std::gcd(std::abs(num), o.den), r = std::gcd(std::abs(o.num), den);
+    num = (num / l) * (o.num / r);
+    den = (den / r) * (o.den / l);
+
     return *this;
 }
 Fraction &Fraction::operator-=(const Fraction &o) {
@@ -43,7 +45,7 @@ Fraction &Fraction::operator-=(const Fraction &o) {
 }
 Fraction &Fraction::operator/=(const Fraction &o) {
     if (o.num == 0) {
-        throw std::logic_error("division by zero");
+        throw std::invalid_argument("division by zero");
     }
     *this *= Fraction(Fraction::unchecked{}, (o.num > 0 ? o.den : -o.den), std::abs(o.num));
     return *this;
