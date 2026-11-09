@@ -23,7 +23,7 @@ Fraction Negative::evaluate() const {
     return -value_->evaluate();
 };
 void Negative::print(std::ostream &os) const {
-    os << "(-" << value_ << ")";
+    os << "(-" << *value_ << ")";
 };
 BinaryExpression::BinaryExpression(std::unique_ptr<Expression> lhs, std::unique_ptr<Expression> rhs)
     : lhs((uniqueExpression &&)lhs), rhs((uniqueExpression &&)rhs) {};
@@ -40,9 +40,9 @@ BinaryExpression::BinaryExpression(std::unique_ptr<Expression> lhs, std::unique_
     Fraction tp::evaluate() const {                \
         return lhs->evaluate() op rhs->evaluate(); \
     }
-#define PRINT(tp, op)                                        \
-    void tp::print(std::ostream &os) const {                 \
-        os << "(" << lhs << " " << #op << " " << rhs << ")"; \
+#define PRINT(tp, op)                                          \
+    void tp::print(std::ostream &os) const {                   \
+        os << "(" << *lhs << " " << #op << " " << *rhs << ")"; \
     }
 DECLARE_BINARYEXPR(CONSTRUCTOR)
 DECLARE_BINARYEXPR(EVALUATE)
