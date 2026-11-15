@@ -1,6 +1,9 @@
 #include "ratexpr/fraction.hpp"
+#include <stdexcept>
 #include <cstdint>
 #include <numeric>
+#include <string>
+#include <cstdlib>
 
 namespace ratexpr {
 Fraction::Fraction() : num(0), den(1) {};

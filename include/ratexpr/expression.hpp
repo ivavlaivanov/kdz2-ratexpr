@@ -17,16 +17,16 @@ class Const : public Expression {
 
 public:
     explicit Const(const Fraction &value);
-    virtual Fraction evaluate() const override;
-    virtual void print(std::ostream &os) const override;
+    virtual Fraction evaluate() const override final;
+    virtual void print(std::ostream &os) const override final;
 };
 class Negative : public Expression {
     const std::unique_ptr<Expression> value_;
 
 public:
     explicit Negative(std::unique_ptr<Expression> operand);
-    virtual Fraction evaluate() const override;
-    virtual void print(std::ostream &os) const override;
+    virtual Fraction evaluate() const override final;
+    virtual void print(std::ostream &os) const override final;
 };
 class BinaryExpression : public Expression {
 protected:
@@ -46,8 +46,8 @@ public:
     class T : public BinaryExpression {                                      \
     public:                                                                  \
         T(std::unique_ptr<Expression> lhs, std::unique_ptr<Expression> rhs); \
-        Fraction evaluate() const override;                                  \
-        void print(std::ostream &os) const override;                         \
+        Fraction evaluate() const override final;                            \
+        void print(std::ostream &os) const override final;                   \
     }
 
 DECLARE_CLASS(BINARY_EXPR)
