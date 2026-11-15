@@ -10,8 +10,6 @@ class Fraction {
     Fraction(unchecked &&, std::int64_t numerator, std::int64_t denominator = 1);
 
 public:
-    ~Fraction() = default;
-
     Fraction();
     Fraction(const Fraction &o);
     Fraction(std::int64_t numerator, std::int64_t denominator = 1);
