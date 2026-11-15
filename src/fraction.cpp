@@ -7,8 +7,6 @@
 
 namespace ratexpr {
 Fraction::Fraction() : num(0), den(1) {};
-Fraction::Fraction(const Fraction &o) : num(o.num), den(o.den) {
-}
 Fraction::Fraction(Fraction::unchecked &&, std::int64_t numerator, std::int64_t denominator)
     : num(numerator), den(denominator) {};
 Fraction::Fraction(std::int64_t numerator, std::int64_t denominator) {
