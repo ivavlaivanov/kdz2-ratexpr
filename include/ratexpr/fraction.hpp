@@ -11,7 +11,6 @@ class Fraction {
 
 public:
     Fraction();
-    Fraction(const Fraction &o);
     Fraction(std::int64_t numerator, std::int64_t denominator = 1);
 
     Fraction &operator+=(const Fraction &o);
@@ -24,6 +23,8 @@ public:
     Fraction &operator-=(std::uint32_t k);
     Fraction &operator*=(std::uint32_t k);
     Fraction &operator/=(std::uint32_t k);
+
+    friend bool operator==(const Fraction &a, const Fraction &b);
 
     friend Fraction operator+(const Fraction &a, const Fraction &b);
     friend Fraction operator+(const Fraction &a, std::uint32_t k);

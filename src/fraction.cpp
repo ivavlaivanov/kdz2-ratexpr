@@ -26,6 +26,11 @@ void Fraction::normalize() {
 Fraction Fraction::operator-() const {
     return Fraction(Fraction::unchecked{}, -num, den);
 }
+
+bool operator==(const Fraction &a, const Fraction &b) {
+    return a.num == b.num && a.den == b.den;
+}
+
 Fraction &Fraction::operator+=(const Fraction &o) {
     std::int64_t _den = std::lcm(o.den, den);
     num = num * (_den / den) + (_den / o.den) * o.num;
